@@ -1,0 +1,3 @@
+.env
+projectera/__pycache__/*
+db.sqlite3
