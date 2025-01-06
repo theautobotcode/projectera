@@ -1,4 +1,8 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin
+)
 from django.db import models
 from django.utils.timezone import now
 
@@ -39,7 +43,7 @@ class AbstractBaseUserWithProfile(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     profile_pic = models.CharField(max_length=255, blank=True, null=True)
     organization = models.ForeignKey(
-        'Organization', on_delete=models.SET_NULL, null=True, blank=True, related_name='users'
+        Organization, on_delete=models.SET_NULL, null=True, blank=True, related_name='users'
     )
     created_at = models.DateTimeField(default=now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
@@ -70,4 +74,4 @@ class User(AbstractBaseUserWithProfile):
         db_table = 'user'
 
     def __str__(self):
-        return self.email
+        return str(self.email)
