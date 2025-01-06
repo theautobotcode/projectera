@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'userview',
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_yasg'
 ]
 
 AUTH_USER_MODEL="accounts.User"
