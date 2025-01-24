@@ -1,6 +1,7 @@
 from django.db import models
 from django.dispatch import receiver
-from utils.mongoclient import MongoDBClient
+# from utils.mongoclient import MongoDBClient
+
 class Organization(models.Model):
     organization_name = models.CharField(max_length=256)
     org_slug = models.SlugField(max_length=256, unique=True)

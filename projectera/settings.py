@@ -10,7 +10,7 @@ SECRET_KEY = 'django-insecure-*0z&o0la+x62j2x-=c_uxvg)k$5fn^c+7o96d)$w5uo7ykuq8x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['projectera.pythonanywhere.com','localhost']
+ALLOWED_HOSTS = ['projectera.pythonanywhere.com', 'localhost']
 print(os.getenv('HOST'))
 # Application definition
 
@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
 ]
 
-AUTH_USER_MODEL="accounts.User"
+AUTH_USER_MODEL = "accounts.User"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
