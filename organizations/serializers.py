@@ -27,7 +27,7 @@ class OrganizationSerializer(serializers.Serializer):
         obj = Organization.objects.filter(org_slug=data["org_slug"])
         if len(obj) > 0:
             raise serializers.ValidationError("org_slug must be unique")
-        user = User.objects.filter(email=data["email"])
+        user = User.objects.filter(email=data["admin_email"])
         if len(user) > 0:
             raise serializers.ValidationError("user email already exists")
         return data
@@ -41,10 +41,9 @@ class OrganizationSerializer(serializers.Serializer):
         )
         if org:
             adminuser = User(
-                username=validated_data.get("admin_email"),
                 email=validated_data.get("admin_email")
                 )
             adminuser.organization = org
             adminuser.set_password(validated_data.get("org_slug"))
             adminuser.save()
-        return super().create(validated_data)
+        return validated_data

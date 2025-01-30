@@ -1,6 +1,10 @@
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import (
+    IsAuthenticated
+)
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from organizations.models import Organization
 from organizations.serializers import OrganizationSerializer
@@ -26,16 +30,19 @@ class SetupOrganization(GenericAPIView):
     Create an organization
     '''
     serializer_class = OrganizationSerializer
+    permission_classes = [IsAuthenticated,]
+    authentication_classes =[ JWTAuthentication, ]
 
     def post(self, request, *args, **kwargs):
         
-        serializer = self.get_serializer(request.data)
+        serializer = self.get_serializer(data=request.data)
         
         if serializer.is_valid():
-            serializer.create(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            print("Valid data")
+            result = serializer.create(serializer.validated_data)
+            return Response(result, status=status.HTTP_201_CREATED)
 
         else:
             return Response(
-                serializer.data,
+                serializer.errors,
                 status=status.HTTP_400_BAD_REQUEST)
