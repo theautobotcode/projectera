@@ -12,6 +12,9 @@ class Organization(models.Model):
     class Meta:
         db_table="organizations"
 
+    def __str__(self):
+        return self.organization_name
+
 # @receiver(models.signals.post_save, sender=Organization)
 # def manage_organization(sender, instance, created, **kwargs):
 #     client= MongoDBClient()
