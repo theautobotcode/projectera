@@ -2,16 +2,16 @@
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv()
+load_dotenv('.env')
 SECRET_KEY = 'django-insecure-*0z&o0la+x62j2x-=c_uxvg)k$5fn^c+7o96d)$w5uo7ykuq8x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['projectera.pythonanywhere.com','localhost']
-print(os.getenv('MONGOHOST'))
+ALLOWED_HOSTS = ['projectera.pythonanywhere.com', 'localhost']
 # Application definition
 
 INSTALLED_APPS = [
@@ -21,13 +21,40 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
+    'accounts.apps.AccountsConfig',
+    'organizations',
     'userview',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'drf_yasg',
+    "corsheaders",
+    "resources",
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
+    'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(days=1),
+    'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=30),
+}
+
+
+AUTH_USER_MODEL="accounts.User"
+CORS_ALLOW_ALL_ORIGINS=True
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -114,3 +141,11 @@ MEDIA_ROOT = '/home/projectera/projectera/media'
 MEDIA_URL = '/media/'
 STATIC_ROOT = '/home/projectera/projectera/static'
 STATIC_URL = '/static/'
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER =  os.getenv("EMAIL_HOST_USER","obiktechnology@gmail.com") # Your Gmail address
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD","Password")  # Use the generated App Password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
