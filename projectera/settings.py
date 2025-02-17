@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     "corsheaders",
     "resources",
+    "quick_bill"
 ]
 
 REST_FRAMEWORK = {
@@ -49,8 +50,8 @@ SIMPLE_JWT = {
 }
 
 
-AUTH_USER_MODEL="accounts.User"
-CORS_ALLOW_ALL_ORIGINS=True
+AUTH_USER_MODEL = "accounts.User"
+CORS_ALLOW_ALL_ORIGINS = True
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -146,6 +147,6 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER =  os.getenv("EMAIL_HOST_USER","obiktechnology@gmail.com") # Your Gmail address
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD","Password")  # Use the generated App Password
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "obiktechnology@gmail.com")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "Password")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
