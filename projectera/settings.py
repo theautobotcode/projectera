@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     "corsheaders",
     "resources",
+    'commons',
 ]
 
 REST_FRAMEWORK = {
