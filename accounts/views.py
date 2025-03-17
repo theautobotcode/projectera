@@ -25,7 +25,8 @@ class LoginView(GenericAPIView):
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
-                'org_slug':user.organization.org_slug if user.organization else None 
+                'org_slug':user.organization.org_slug if user.organization else None,
+                'template_id':user.templates.pk if user.templates else None
             })
         else:
             return Response({"msg":"Invalid Credentials"}, status=400)

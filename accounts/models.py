@@ -12,6 +12,7 @@ import os
 from django.template.loader import render_to_string
 
 from organizations.models import Organization
+from commons.models import Templates
 
 
 class CustomUserManager(BaseUserManager):
@@ -74,7 +75,7 @@ class User(AbstractBaseUserWithProfile):
     ]
     
     role = models.CharField(max_length=50, choices=ROLES, default='org-operator')
-
+    templates = models.ForeignKey(Templates, on_delete=models.SET_NULL, null=True, blank=True)
     class Meta:
         db_table = 'user'
 
