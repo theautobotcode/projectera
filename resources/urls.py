@@ -1,10 +1,12 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ResourceViewSet
-
-router = DefaultRouter()
-router.register(r'menu', ResourceViewSet)
+from .views import (
+    ResourceView,
+    
+)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', ResourceView.as_view()),
+    
+
 ]

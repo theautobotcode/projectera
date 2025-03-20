@@ -5,7 +5,11 @@ from rest_framework.generics import GenericAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny
 
-from accounts.serializers import LoginSerializer
+from accounts.serializers import (
+    LoginSerializer,
+    TokenSerializers,
+    TokenRefreshSerializer
+)
 
 
 class LoginView(GenericAPIView):
@@ -34,3 +38,22 @@ class LoginView(GenericAPIView):
 
 def loginpage(r):
     return render(r, "login.html")
+
+class TokenData(GenericAPIView):
+    serializer_class = TokenSerializers
+    permission_classes = [AllowAny]
+
+    def post(self, req):
+        serializer = self.get_serializer(data=req.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.verify()
+
+class TokenRefreshView(GenericAPIView):
+    serializer_class = TokenRefreshSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.validated_data)
+
