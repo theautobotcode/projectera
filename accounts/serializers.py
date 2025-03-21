@@ -18,13 +18,14 @@ class LoginSerializer(serializers.Serializer):
 class TokenSerializers(serializers.Serializer):
     token = serializers.CharField(required=True)
 
-    def verify(self):
+    def verify(self,token):
         try:
-            access_token = AccessToken(self.token)
+            access_token = AccessToken(token)
             user_id = access_token['user_id']
             user = User.objects.get(id=user_id)
-            return Response({'id': user.id, 'username': user.username, 'email': user.email})
+            return Response({'id': user.id,  'email': user.email})
         except Exception as e:
+            print(e)
             return Response({},status=401)
         
 

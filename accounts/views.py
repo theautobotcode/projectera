@@ -46,7 +46,8 @@ class TokenData(GenericAPIView):
     def post(self, req):
         serializer = self.get_serializer(data=req.data)
         serializer.is_valid(raise_exception=True)
-        data = serializer.verify()
+        data = serializer.verify(serializer.data["token"])
+        return data
 
 class TokenRefreshView(GenericAPIView):
     serializer_class = TokenRefreshSerializer
